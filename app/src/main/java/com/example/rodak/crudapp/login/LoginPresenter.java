@@ -1,5 +1,7 @@
 package com.example.rodak.crudapp.login;
 
+import android.content.Context;
+import android.net.Uri;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.View;
@@ -24,9 +26,11 @@ public class LoginPresenter implements LoginActivityMVP.Presenter {
     }
 
     @Override
-    public void validateCredentials(AutoCompleteTextView mUsernameView, EditText mPasswordView) {
+    public void validateCredentials(Context context, AutoCompleteTextView mUsernameView,
+                                    EditText mPasswordView, Uri currentUserUri) {
 
         String username = mUsernameView.getText().toString().trim();
+        //TODO: store a password as hash
         String password = mPasswordView.getText().toString().trim();
 
         boolean cancel = false;
@@ -52,7 +56,8 @@ public class LoginPresenter implements LoginActivityMVP.Presenter {
             if (cancel) {
                 view.focusIncorrectInput(focusView);
             } else {
-                view.showProgressBar(true);
+//                view.showProgressBar(true);
+                model.sendUserToDb(username, password, currentUserUri);
                 view.showLoginSucceededMessage();
             }
         }

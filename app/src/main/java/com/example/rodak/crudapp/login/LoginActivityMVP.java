@@ -1,8 +1,9 @@
 package com.example.rodak.crudapp.login;
 
 import android.annotation.TargetApi;
+import android.content.Context;
+import android.net.Uri;
 import android.os.Build;
-import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 
@@ -26,10 +27,10 @@ public interface LoginActivityMVP {
     interface Presenter {
         void setView(LoginActivityMVP.View view);
 
-        void validateCredentials(AutoCompleteTextView username, EditText password);
+        void validateCredentials(Context context, AutoCompleteTextView username, EditText password, Uri currentUserUri);
     }
 
     interface Model {
-
+        void sendUserToDb(String username, String password, Uri currentUserUri);
     }
 }

@@ -5,6 +5,7 @@ import dagger.Provides;
 
 @Module
 public class LoginActivityModule {
+
     @Provides
     public LoginActivityMVP.Presenter provideLoginActivityPresenter(LoginActivityMVP.Model model){
         return new LoginPresenter(model);

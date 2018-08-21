@@ -2,7 +2,9 @@ package com.example.rodak.crudapp.login;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
-import android.annotation.TargetApi;
+import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,7 +12,6 @@ import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.rodak.crudapp.R;
@@ -22,6 +23,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class LoginActivity extends AppCompatActivity implements LoginActivityMVP.View {
+
+    private static final int EXISTING_USER_LOADER = 0;
+    private Uri currentUserUri;
+    Context context;
 
     @Inject
     LoginActivityMVP.Presenter presenter;
@@ -45,7 +50,10 @@ public class LoginActivity extends AppCompatActivity implements LoginActivityMVP
         ((App) getApplication()).getComponent().inject(this);
         ButterKnife.bind(this);
 
-        mSignIn.setOnClickListener(v -> presenter.validateCredentials(mUsernameView, mPasswordView));
+        Intent intent = getIntent();
+        currentUserUri = intent.getData();
+
+        mSignIn.setOnClickListener(v -> presenter.validateCredentials(this, mUsernameView, mPasswordView, currentUserUri));
 
     }
 
